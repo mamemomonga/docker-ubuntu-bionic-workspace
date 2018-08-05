@@ -11,8 +11,7 @@
 # 構築
 
 	$ git clone ...
-	$ ./create-env.sh
-	$ docker-compose build
+	$ ./ctrl.sh build
 
 # 単発起動
 
@@ -20,11 +19,11 @@
 
 rootユーザでログイン
 
-	$ docker-compose run --rm app root
+	$ ./ctrl.sh run-root
 
 appユーザでログイン
 
-	$ docker-compose run --rm app app
+	$ ./ctrl.sh run-app
 
 # サーバ起動
 
@@ -32,28 +31,25 @@ appユーザでログイン
 
 ## 起動
 
-	$ docker-compose up -d
-	$ docker-compose ps
-	$ docker-compose logs
+	$ ./ctrl.sh up
 
 ## 終了
 
-	$ docker-compose down
+	$ ./ctrl.sh down
 
 rootユーザでログイン
 
-	$ docker-compose exec app /opt/login.sh root
+	$ ./ctrl.sh login-root
 
 appユーザでログイン
 
-	$ docker-compose exec app /opt/login.sh app
-
+	$ ./ctrl.sh login-app
 
 # TIPS
 
 ## docker exec コマンドを使用する
 
-docker-compose exec だと -it オプションがデフォルトになっているため、標準入出力をつかったやりとりに問題がでる場合がある。
+docker-compose exec だと -it オプションがデフォルトになっているため、標準入出力をつかったやりとりに問題がでる場合があるが、docker exec を使えば解決する。
 
 ### /home/app の内容を app.tar.gz で取得する
 
@@ -62,8 +58,4 @@ docker-compose exec だと -it オプションがデフォルトになってい�
 ### カレントディレクトリの内容を/home/appにコピーする
 
 	$ tar c . | docker exec -i $(docker ps -q --filter 'name=app') tar xvC /home/app
-
-
-
-
 
